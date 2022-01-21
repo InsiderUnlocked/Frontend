@@ -27,7 +27,6 @@ function App() {
                     <Route path="/Senate-People" component={CongressPeople}/>
                     {/*404*/}
                     <Route component={NotFound}/>
-
                 </Switch>
             </div>
         </Router>

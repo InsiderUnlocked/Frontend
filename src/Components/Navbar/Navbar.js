@@ -1,6 +1,7 @@
 // Purpose: Build Navbar Component 
 
 // Imports
+import React from 'react';
 import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom'
 import './Navbar.css';
@@ -11,7 +12,7 @@ const { Header } = Layout;
 
   
 
-const Navbar = () => {
+function Navbar() {
     return (
         <Header className="header">  
             {/* Logo Text */}

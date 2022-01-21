@@ -1,6 +1,7 @@
 // Purpose: when invalid url is given redirect to this page
 
 // Import Libraries
+import React from 'react';
 import { Layout, Button, Result } from 'antd';
 import './NotFound.css';
 import Navbar from '../Navbar/Navbar'

@@ -23,11 +23,16 @@ const columns = [
     // render: text => <a>{text}</a>,
   },
   {
+    title: 'Asset Type',
+    dataIndex: 'assetType',
+    key: 'assetType',
+  },
+  {
     title: "Ticker",
     dataIndex: "ticker",
     key: "ticker",
     render: (text) => (
-      text === ("-") ? "Other Assets" : <a href={`https://insiderunlocked.web.app/ticker/${text}`}>{text}</a>
+      text === ("-") ? "N/A" : <a href={`https://insiderunlocked.web.app/ticker/${text}`}>{text}</a>
     ),
   },
   {
@@ -233,6 +238,9 @@ class CongressTrades extends React.Component {
               <h1 className="headerSummaryText">Summary for the last {summary} days</h1>
               <Dropdown className= "Dropdown" overlay={    
                 <Menu onClick={this.handleSummaryMenuClick}>
+                  <Menu.Item key="All" icon={<SlidersOutlined />}>
+                    All time
+                  </Menu.Item>
                   <Menu.Item key="30" icon={<SlidersOutlined />}>
                     Last 30 Days
                   </Menu.Item>

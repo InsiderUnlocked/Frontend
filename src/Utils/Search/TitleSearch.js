@@ -6,6 +6,7 @@ import { Input } from "antd";
 
 const Search = Input.Search;
 
+
 export const TitleSearch = ({ onSearch, ...props }) => (
   <div {...props}>
     <Search
@@ -15,3 +16,4 @@ export const TitleSearch = ({ onSearch, ...props }) => (
     />
   </div>
 );
+

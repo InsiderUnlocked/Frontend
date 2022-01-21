@@ -3,10 +3,11 @@
 
 // Imports
 import React from 'react';
-import { Layout, Row, Col, Card, Avatar} from 'antd';
+import { Layout, Row, Col, Card, Avatar, Pagination} from 'antd';
 import FooterComponent from '../Footer/Footer';
 import Navbar from '../Navbar/Navbar'
 import reqwest from 'reqwest';
+import { TitleSearch } from "../../Utils/Search/TitleSearch";
 
 // Initilze that our content is equal to the layout
 const { Content } = Layout;
@@ -18,10 +19,6 @@ const { Meta } = Card;
 const getURLParams = (params) => ({
   // Set the name search
   search: params.name,
-  // Limit represents how much data per page
-  limit: params.pagination.pageSize,
-  // offset represents how much data is being ignored
-  offset: (params.pagination.current - 1) * params.pagination.pageSize,
   
 });
 
@@ -30,13 +27,6 @@ class CongressTrades extends React.Component {
   state = {
     // Variable to hold the data we retrieve from our request
     data: [],
-    // Keeps track of pagination variables
-    pagination: {
-      // Current page of the user
-      current: 1,
-      // Current page size of the user's table
-      pageSize: 20,
-    },
 
     name: "",
     // Initilzing a skeleton loader
@@ -80,17 +70,13 @@ class CongressTrades extends React.Component {
       // Upon the requeset validiating
     }).then((data) => {
       console.clear();
+      console.log(data.count)
       // Assign variables respectively
       this.setState({
         // Set skeleton loader to false as data is loaded
         loading: false,
         // Assign the data
         data: data.results,
-        // Assign the pagination variables
-        pagination: {
-          ...params.pagination,
-          total: data.count - params.pagination.pageSize,
-        },
       });
     });
   };
@@ -104,10 +90,21 @@ class CongressTrades extends React.Component {
           {/* Initilzing our content */}
           <Content>
 
-           {/* Rendering our Header Summary Text*/}
-           <div className="headerSummaryDiv">
-            <h1 className="headerSummaryText">All of senate</h1>
-          </div>
+           {/* Rendering our Header */}
+           <Row style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: "10px",
+              marginBottom: "10px",
+            }}>
+            <h1 style={{marginLeft: 25, marginTop: 5}}className="headerSummaryText">All of senate</h1>
+            <TitleSearch
+              
+              onSearch={this.handleSearch}
+              style={{ marginRight: 25 }}
+            />
+          </Row>
           {/* create a grid of cards */}
           <Row gutter={[24, 24]} style={{ margin: 10}}>
             {/* Loop through the data and render the cards */}
@@ -130,11 +127,7 @@ class CongressTrades extends React.Component {
                 </a>
               </Col>
             ))}
-          
           </Row>
-          <div className="headerSummaryDiv">
-            
-          </div>
           </Content>
           <FooterComponent />
         </Layout>

@@ -10,9 +10,10 @@ import { Themes } from 'react-tradingview-widget';
 
 import "./TickerDetail.css"
 import reqwest from 'reqwest';
-import {Row, Col, Card } from 'antd';
+import {Row, Col, Card, Dropdown, Menu, Button } from 'antd';
 import { Layout } from "antd";
 import { TitleSearch } from "../../Utils/Search/TitleSearch";
+import { DownOutlined, SlidersOutlined, DollarOutlined } from "@ant-design/icons";
 
 // Initilze that our content is equal to the layout
 const { Content } = Layout;
@@ -22,6 +23,11 @@ const columns = [
       title: 'Transaction Date',
       dataIndex: 'transactionDate',
       key: 'transactionDate',
+    },
+    {
+      title: 'Asset Type',
+      dataIndex: 'assetType',
+      key: 'assetType',
     },
     {
       title: 'Ticker',
@@ -63,6 +69,8 @@ const columns = [
 
 // For pagination to work we need to get the user input, such as page size, and current page number
 const getURLParams = params => ({
+  // filter the transaction type
+  transactionType: params.transactionType,
   // Set the name search
   search: params.name,
   // Limit represents how much data per page
@@ -99,6 +107,8 @@ class CongressTrades extends React.Component {
       // intilize the number of sales
       sales: "0",
     },
+
+    transactionType: "",
   };
 
 
@@ -127,6 +137,17 @@ class CongressTrades extends React.Component {
     this.fetch({
       pagination: this.state.pagination,
       name,
+    });
+  };  
+
+  handleTransactionTypeFilter = (filterInput) => {
+    this.setState({
+      transactionType: filterInput.key,
+    })
+    this.fetch({
+      pagination: this.state.pagination,
+      transactionType: filterInput.key,
+      name: this.state.name,
     });
   };
   
@@ -228,8 +249,8 @@ class CongressTrades extends React.Component {
 
             </div>
 
-          {/* Rendering our search component*/}
-          <div
+          {/* Rendering our search and filter components*/}
+          <Row
             style={{
               display: "flex",
               justifyContent: "space-between",
@@ -237,10 +258,33 @@ class CongressTrades extends React.Component {
             }}
           >
             <TitleSearch
+              
               onSearch={this.handleSearch}
               style={{ marginRight: 20 }}
             />
-          </div>
+              <Dropdown overlay={    
+                <Menu onClick={this.handleTransactionTypeFilter}>
+                  <Menu.Item key="" icon={<DollarOutlined />}>
+                    All Transactions
+                  </Menu.Item>
+                  <Menu.Item key="Purchase" icon={<DollarOutlined />}>
+                    Purchases
+                  </Menu.Item>
+                  <Menu.Item key="Sale (Full)" icon={<DollarOutlined />}>
+                    Full Sales
+                  </Menu.Item>
+                  <Menu.Item key="Sale (Partial)" icon={<DollarOutlined />}>
+                    Partial Sales
+                  </Menu.Item>
+                </Menu>
+              }>
+              <div style={{marginRight: 20, marginLeft: 20 }} >
+                <Button>
+                  Filter Transaction Type <DownOutlined />
+                </Button>
+              </div>
+            </Dropdown>
+          </Row>
 
             <Table
                 columns={columns}
