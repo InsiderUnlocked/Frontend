@@ -11,6 +11,7 @@ import "./CongressTrades.css";
 import { TitleSearch } from "../../Utils/Search/TitleSearch";
 import { Menu} from "antd";
 import { DownOutlined, SlidersOutlined, DollarOutlined } from "@ant-design/icons";
+import {Adsense} from '@ctrl/react-adsense';
 // Initilze that our content is equal to the layout
 const { Content } = Layout;
 
@@ -123,6 +124,7 @@ class CongressTrades extends React.Component {
     const { pagination } = this.state;
     // Fetch this variable
     this.fetch({ pagination });
+  
   }
   // Function called when any changes are done to the table
   handleTableChange = (pagination) => {
@@ -188,7 +190,7 @@ class CongressTrades extends React.Component {
       data: getURLParams(params),
       // Upon the requeset validiating
     }).then((data) => {
-      console.clear();
+      // console.clear();
       // Assign variables respectively
       this.setState({
         // Set skeleton loader to false as data is loaded
@@ -288,6 +290,14 @@ class CongressTrades extends React.Component {
               </Col>
             </Row>
           </div>
+
+          <Adsense
+            client="ca-pub-7640562161899788"
+            slot="7640562161899788"
+            style={{ display: 'block' }}
+            layout="in-article"
+            format="fluid"
+          />
 
           {/* Rendering our search and filter components*/}
           <Row
