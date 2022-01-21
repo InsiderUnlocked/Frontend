@@ -1,0 +1,56 @@
+@import '~antd/dist/antd.css';
+@import '~antd/dist/antd.dark.css';
+/* @import '~antd/dist/antd.compact.css'; */
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.ant-menu-horizontal, .ant-menu-item::after, .ant-menu-submenu::after {
+  border: none !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+
+.App-header {
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+/* .header {
+  background-color: white;
+} */
+
+/* When hover on class SearchBar remove the hover color */
+.SearchBar:hover {
+  color: white;
+}
+
+/* .SearchBar {
+  background-color: #ffffff;
+  color: #ffffff;
+  background: unset;
+} */
+
+
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}

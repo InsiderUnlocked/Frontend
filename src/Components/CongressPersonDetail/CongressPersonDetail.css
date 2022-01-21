@@ -1,0 +1,10 @@
+.ant-card-head {
+    /* background: #177ddc !important; */
+    /* background: linear-gradient(69deg, rgba(72,127,217,1) 0%, rgba(120,203,187,1) 100%) !important; */
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+
+.cardHeaderText {
+    font-size: 18px;
+}
