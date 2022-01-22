@@ -1,9 +1,10 @@
+// @Author: Farhan Rehman
+
 // Purpose: when invalid url is given redirect to this page
 
 // Import Libraries
 import React from 'react';
 import { Layout, Button, Result } from 'antd';
-import './NotFound.css';
 import Navbar from '../Navbar/Navbar'
 import FooterComponent from '../Footer/Footer';
 import { Link } from 'react-router-dom'

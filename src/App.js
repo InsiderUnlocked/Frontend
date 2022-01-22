@@ -1,13 +1,17 @@
+// @ Author: Mohammed Al-Rasheed & Farhan Rehman
+
 // Purpose: create website directories and initilze our webpages
 
 // IMPORTS
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import React from 'react';
+// Import pages
 import CongressTrades from './Components/CongressTrades/CongressTrades';
 import TickerDetail from './Components/TickerDetail/TickerDetail';
 import CongressPersonDetail from './Components/CongressPersonDetail/CongressPersonDetail';
 import CongressPeople from './Components/CongressPeople/CongressPeople';
 import NotFound from './Components/NotFound/NotFound';
+// Parent CSS
 import './App.css';
 
 function App() {

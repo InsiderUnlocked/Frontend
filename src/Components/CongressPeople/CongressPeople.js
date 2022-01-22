@@ -11,7 +11,7 @@ import { TitleSearch } from "../../Utils/Search/TitleSearch";
 
 // Initilze that our content is equal to the layout
 const { Content } = Layout;
-
+// Create abstract card
 const { Meta } = Card;
 
 
@@ -88,7 +88,7 @@ class CongressTrades extends React.Component {
           {/* Rendering our navbar*/}
           <Navbar />
           {/* Initilzing our content */}
-          <Content>
+          <Content style={{marginBottom: 10}}>
 
            {/* Rendering our Header */}
            <Row style={{

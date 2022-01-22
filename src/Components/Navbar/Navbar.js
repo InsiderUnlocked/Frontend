@@ -1,16 +1,15 @@
-// Purpose: Build Navbar Component 
+// @Author: Farhan Rehman
 
+// Purpose: Build Navbar Component 
 // Imports
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom'
-import './Navbar.css';
 import { StockOutlined, UserOutlined} from '@ant-design/icons';
+
+// in the navbar's case the layout is the header so we initilize that here
 const { Header } = Layout;
 
-
-
-  
 
 function Navbar() {
     return (
@@ -33,4 +32,5 @@ function Navbar() {
     )
 }
 
+// export to reuse in other files
 export default Navbar;

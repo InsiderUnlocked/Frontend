@@ -1,9 +1,10 @@
+// @Author: Mohammed Al-Rasheed
 // Purpose: Build Footer Component 
 
 // Imports
 import React from 'react';
-import './Footer.css';
-// Function component is not a function declaration
+
+// not much to see here, just creating the footer of the website
 
 function FooterComponent()  {
     return (
@@ -13,4 +14,4 @@ function FooterComponent()  {
     )
 }
 
-export default FooterComponent
+export default FooterComponent;

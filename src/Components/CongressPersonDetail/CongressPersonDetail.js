@@ -240,7 +240,7 @@ class CongressTrades extends React.Component {
           </div>
 
           {/* Rendering our 3 Stats Cards*/}
-          <div className="site-card-wrapper" style={{ marginBottom: 20 }}>
+          <div style={{ marginBottom: 20 }}>
             <Row gutter={[16, 16]} style={{ margin: 10 }}>
               <Col xs={24} xl={8}>
                 <Card
