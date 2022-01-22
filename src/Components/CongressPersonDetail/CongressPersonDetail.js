@@ -332,7 +332,7 @@ class senatorPersonDetail extends React.Component {
                   </Menu.Item>
                 </Menu>
               }>
-              <div style={{marginRight: 20 }} >
+              <div style={{marginLeft: 20 ,marginRight: 20 }} >
                 <Button>
                   Filter Transaction Type <DownOutlined />
                 </Button>
