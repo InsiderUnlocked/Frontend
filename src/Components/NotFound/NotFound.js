@@ -10,7 +10,7 @@ import FooterComponent from '../Footer/Footer';
 import { Link } from 'react-router-dom'
 const { Content } = Layout;
 
-console.clear();
+
 
 const NotFound = () => {  
   return (

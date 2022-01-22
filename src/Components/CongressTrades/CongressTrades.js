@@ -366,7 +366,7 @@ class senateTrades extends React.Component {
             // On change to this table call the handleTableChange function
             onChange={this.handleTableChange}
             // Some styling
-            scroll={{ x: "max-content", y: "48vh" }}
+            scroll={{ x: 1500, y: "48vh" }}
             style={{ margin: 20, boxShadow: "1px 1px 1px 1px #ccc" }}
           />
         </Content>

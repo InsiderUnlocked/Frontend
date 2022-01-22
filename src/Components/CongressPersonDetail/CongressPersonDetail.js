@@ -111,6 +111,8 @@ class senatorPersonDetail extends React.Component {
       currentChamber: "",
       currentParty: "",
       currentState: "",
+      // variable to keep senators full name
+      fullName: "",
     },
     // intilize the transaction type the user wants to see to be able to filter
     transactionType: "",
@@ -169,6 +171,8 @@ class senatorPersonDetail extends React.Component {
     // Set the skeleton loader to true while we are making the request
     this.setState({ statsLoading: true, tableLoading: true });
     reqwest({
+      // get the bioguide for congress poeple not name
+      
       url: `https://insiderunlocked.herokuapp.com/government/congress-person/${this.props.match.params.name}/?format=json`,
       method: "get",
       type: "json",
@@ -219,6 +223,7 @@ class senatorPersonDetail extends React.Component {
             currentChamber: response.results[0].currentChamber,
             currentParty: response.results[0].currentParty,
             currentState: response.results[0].currentState,
+            fullName: response.results[0].fullName,
           },
         });
       })
@@ -246,7 +251,7 @@ class senatorPersonDetail extends React.Component {
           >
             <Card
               hoverable
-              title={this.props.match.params.name + ": " + personDetail.currentParty+ ', ' + personDetail.currentChamber + ', ' + personDetail.currentState}
+              title={personDetail.fullName + ": " + personDetail.currentParty+ ', ' + personDetail.currentChamber + ', ' + personDetail.currentState}
               className = "smooth-card"
               loading={statsLoading}
             >
@@ -352,7 +357,7 @@ class senatorPersonDetail extends React.Component {
             // On change to this table call the handleTableChange function
             onChange={this.handleTableChange}
             // Some styling
-            scroll={{ x: "max-content", y: "48vh" }}
+            scroll={{ x: 1500, y: "48vh" }}
             style={{ margin: 20, boxShadow: "1px 1px 1px 1px #ccc" }}
           />
         </Content>

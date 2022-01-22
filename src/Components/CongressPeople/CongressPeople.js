@@ -104,7 +104,7 @@ class senatePeople extends React.Component {
             {data.map((item) => (
               <Col xs={24} xl={6} key={item.id}>
                 {/* add link to card */}
-                <a href={`https://insiderunlocked.web.app/Senator/${item.fullName.replace(/\./g, " ")}`}>
+                <a href={`https://insiderunlocked.web.app/Senator/${item.bioguide}`}>
                 <Card
                   hoverable
                   className='smooth-card'

@@ -315,7 +315,7 @@ class tickerDetail extends React.Component {
             pagination={pagination}
             loading={tableLoading}
             onChange={this.handleTableChange}
-            scroll={{ x: "max-content", y: '48vh' }}
+            scroll={{ x: 1500, y: "48vh" }}
             style={{ margin: 20, boxShadow: '1px 1px 1px 1px #ccc' }}
 
           />
