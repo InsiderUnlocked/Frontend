@@ -20,7 +20,6 @@ const columns = [
     title: "Transaction Date",
     dataIndex: "transactionDate",
     key: "transactionDate",
-    // render: text => <a>{text}</a>,
   },
   {
     title: 'Asset Type',
@@ -33,7 +32,8 @@ const columns = [
     key: "ticker",
     render: (text) => (
       // if ticker is a dash that means its not a stock so its not valid
-      text === ("-") ? "N/A" : <a href={`https://insiderunlocked.web.app/ticker/${text}`}>{text}</a>
+      // replace each dot with a dash in text
+      text === ("-") ? "N/A" :  <a href={`https://insiderunlocked.web.app/ticker/${text.replace(/\./g,'-')}`}>{text}</a>
     ),
   },
   {
@@ -84,7 +84,7 @@ const getURLParams = (params) => ({
   transactionType: params.transactionType,
 });
 
-class CongressTrades extends React.Component {
+class senateTrades extends React.Component {
   // variables that we will fetch later on 
   state = {
     // Variable to hold the data we retrieve from our request
@@ -112,7 +112,7 @@ class CongressTrades extends React.Component {
       // intilize the number of sales
       sales: "0",
     },
-    //
+    // Keeps track of the time frame for the stats we are showing
     summary: "90",
     // intilize the transaction type the user wants to see to be able to filter
     transactionType: "",
@@ -130,48 +130,69 @@ class CongressTrades extends React.Component {
   handleTableChange = (pagination) => {
     // Fetch the pagination variable to validate the pagination request of the user
     this.fetch({
+      // Update pagination
       pagination,
+      // keep the search variable the same
       search: this.state.search,
+      // keep the transaction type the same
       transactionType: this.state.transactionType,
+      // keep the summary variable the same
       summary: this.state.summary,
     });
 
   };
 
+  // function to basically keep track of the searches of the user
   handleSearch = (search) => {
-
+    // Fetch the search variable to validate the search request of the user
     this.setState({ search });
+    // update other variables
     this.fetch({
-      pagination: this.state.pagination,
+      // update the search variable
       search,
+      // keep the pagination variable the same
+      pagination: this.state.pagination,
+      // keep the transaction type the same
       transactionType: this.state.transactionType,
+      // keep the summary timeframe variable the same
       summary: this.state.summary,
     });
   };
 
+  // function to basically keep track of the filter input from the user
   handleTransactionTypeFilter = (filterInput) => {
+     // set the transaction type variable to the filter input
     this.setState({
       transactionType: filterInput.key,
     })
+    // Update other variables
     this.fetch({
+      // keep the pagination variable the same
       pagination: this.state.pagination,
+      // keep the search variable the same
       search: this.state.search,
+      // update the transaction type variable
       transactionType: filterInput.key,
+      // keep the summary variable the same
       summary: this.state.summary,
     });
   };
 
-  // function to handle menu click and change the summary variable to the value of the menu item
+  // function to handle summary time frame changes per user's input
   handleSummaryMenuClick = (e) => {
+    // set the summary variable to the summary timeframe the user selected
     this.setState({
       summary: e.key,
     });
-
     // make it fetch the data with the new summary variable
     this.fetch({
+      // keep the pagination variable the same
       pagination: this.state.pagination,
+      // keep the search variable the same
       search: this.state.search,
+      // keep the transaction type variable the same
       transactionType: this.state.transactionType,
+      // update the summary variable
       summary: e.key,
     });
   };
@@ -180,8 +201,7 @@ class CongressTrades extends React.Component {
   // Request the info from the backend
   fetch = (params = {}) => {
     // Set the skeleton loader to true while we are making the request
-    this.setState({ tableLoading: true });
-    this.setState({ statsLoading: true });
+    this.setState({ tableLoading: true, statsLoading: true });
     reqwest({
       url: "https://insiderunlocked.herokuapp.com/government/congress-trades/?format=json",
       method: "get",
@@ -190,7 +210,6 @@ class CongressTrades extends React.Component {
       data: getURLParams(params),
       // Upon the requeset validiating
     }).then((data) => {
-      // console.clear();
       // Assign variables respectively
       this.setState({
         // Set skeleton loader to false as data is loaded
@@ -228,6 +247,7 @@ class CongressTrades extends React.Component {
   };
 
   render() {
+    // pass in variables to show within our webpage
     const { data, pagination, tableLoading, statsLoading, stats, summary } = this.state;
     return (
       <Layout style={{ marginRight: 0, minHeight: 1000 }}>
@@ -356,4 +376,4 @@ class CongressTrades extends React.Component {
   }
 }
 
-export default CongressTrades;
+export default senateTrades;

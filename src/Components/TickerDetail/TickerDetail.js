@@ -79,7 +79,7 @@ const getURLParams = params => ({
   offset: (params.pagination.current - 1) * params.pagination.pageSize,
 });
 
-class TickerDetail extends React.Component {
+class tickerDetail extends React.Component {
   // variables that we will fetch later on 
   state = {
     // Variable to hold the data we retrieve from our request
@@ -187,7 +187,7 @@ class TickerDetail extends React.Component {
           // spread the pagination variable from its previous
           ...params.pagination,
           // and update only its total to the total number of records we have for the table
-          total: data.count,
+          total: data.count - params.pagination.pageSize,
         },
       });
       // if we catch an error from this request it means the ticker simply does not exists so we will redirect the user to the 404 page
@@ -230,7 +230,7 @@ class TickerDetail extends React.Component {
         {/* Initilzing our content */}
         <Content>
           <div className="headerSummaryDiv">
-            <h1 className="headerSummaryText">Summary stats of ticker: {this.props.match.params.ticker}</h1>
+            <h1 className="headerSummaryText">Summary stats of ticker: {this.props.match.params.ticker.replace(/-/g, '.')}</h1>
           </div>
           {/* Stats*/}
           <div style={{ marginBottom: 20 }}>
@@ -262,7 +262,8 @@ class TickerDetail extends React.Component {
             {/* Trading Chart*/}
             <TradingViewWidget
               backgroundColor="#141414"
-              symbol={this.props.match.params.ticker}
+              // replace dashes with periods in this.props.match.params.ticker
+              symbol={this.props.match.params.ticker.replace(/-/g, '.')}
               theme={Themes.DARK}
               locale="en"
               autosize
@@ -326,4 +327,4 @@ class TickerDetail extends React.Component {
 }
 
 // export the page to reuse it in other files
-export default TickerDetail;
+export default tickerDetail;

@@ -1,9 +1,11 @@
+// @Author: Farhan Rehman
+
 // Purpose: Build out the page that shows all the senate
 
 
 // Imports
 import React from 'react';
-import { Layout, Row, Col, Card, Avatar, Pagination} from 'antd';
+import { Layout, Row, Col, Card, Avatar} from 'antd';
 import FooterComponent from '../Footer/Footer';
 import Navbar from '../Navbar/Navbar'
 import reqwest from 'reqwest';
@@ -11,49 +13,41 @@ import { TitleSearch } from "../../Utils/Search/TitleSearch";
 
 // Initilze that our content is equal to the layout
 const { Content } = Layout;
-// Create abstract card
+// Create abstract card for better looks refer to ANT Design documentation to understand better
 const { Meta } = Card;
 
 
-// For pagination to work we need to get the user input, such as page size, and current page number this is what the function does
+// This variable keeps track of dynamic URL params such as how much data the user wants to see per page or what transaction type they want to see to allow features such as filtering 
 const getURLParams = (params) => ({
-  // Set the name search
+  // Set the search variable
   search: params.name,
-  
 });
 
-class CongressTrades extends React.Component {
+class senatePeople extends React.Component {
   // Static variables that we will fetch later on
   state = {
     // Variable to hold the data we retrieve from our request
     data: [],
-
+    // variable to hold the search input of the user
     name: "",
-    // Initilzing a skeleton loader
+    // Initilzing a skeleton loader for the cards
     loading: false,
   };
+
   // This function is called when this component is first mounted to DOM(meaning when its first visually represented)
   componentDidMount() {
-    // We assign the pagination variable what we initilzed earlier in the state variable
-    const { pagination } = this.state;
-    // Fetch this variable
-    this.fetch({ pagination });
+    // fetch the data to start the page
+    const { data } = this.state;
+    this.fetch({ data });
   }
-  // Function called when any changes are done to the table
-  handleTableChange = (pagination) => {
-    // Fetch the pagination variable to validate the pagination request of the user
-    this.fetch({
-      pagination,
-      name: this.state.name,
-    });
-  };
 
+
+  // function to basically keep track of the searches of the user
   handleSearch = (name) => {
-    // Handles the search, takes the value of the user input
+    // Fetch the search variable to validate the search request of the user and set the user input to the search variable
     this.setState({ name });
-    // Fetch the data with the new ticker
-    this.fetch({
-      pagination: this.state.pagination,
+    // update other variables
+    this.fetch({ 
       name,
     });
   };
@@ -65,12 +59,10 @@ class CongressTrades extends React.Component {
       url: 'https://insiderunlocked.herokuapp.com/government/congress-all/?format=json',
       method: 'get',
       type: 'json',
-      // Get the user params to validate the pagination for the request URL
+      // Get the user params to validate the request URL
       data: getURLParams(params),
       // Upon the requeset validiating
     }).then((data) => {
-      console.clear();
-      console.log(data.count)
       // Assign variables respectively
       this.setState({
         // Set skeleton loader to false as data is loaded
@@ -82,7 +74,8 @@ class CongressTrades extends React.Component {
   };
 
   render() {
-    const { data, pagination, loading } = this.state;
+    // pass in parameter we want to use in the webpage
+    const { data, loading } = this.state;
     return (
         <Layout style={{ minHeight: 1100}}>
           {/* Rendering our navbar*/}
@@ -135,6 +128,5 @@ class CongressTrades extends React.Component {
   }
 }
 
-export default CongressTrades;
+export default senatePeople;
 
-// ReactDOM.render(<App />, mountNode);

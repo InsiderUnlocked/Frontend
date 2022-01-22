@@ -37,6 +37,8 @@ html, body {
 }
 /* Style the stat card header, so that it doesnt have curves within the card*/
 .ant-card-head {
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
     border-radius: 0 !important;
 }
 
@@ -66,4 +68,18 @@ html, body {
   height:60px;
   right: 0;
   left: 0;
+}
+
+/* Style the congress people page*/
+.congressPersonCard {
+  width: 450px;
+  border-radius: 15px !important; 
+  box-shadow: 1px 1px 1px 1px #000000 !important;
+}
+
+/* when wiidth is less than 450 make width 350*/
+@media (max-width: 450px) {
+  .congressPersonCard {
+      width: 300px;
+  }
 }

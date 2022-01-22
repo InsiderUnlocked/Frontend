@@ -1,16 +1,15 @@
+// @Author: Farhan Rehman
+
 // Purpose: Build out person detail page
 
 // Imports
 import React from "react";
-import { Card, Table, Tag, Avatar } from "antd";
-import { Layout, Col, Row, Button, Menu, Dropdown } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Layout, Col, Row, Button, Menu, Dropdown, Card, Table, Tag, Avatar } from "antd";
 import FooterComponent from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import { TitleSearch } from "../../Utils/Search/TitleSearch";
 import reqwest from "reqwest";
-import "./CongressPersonDetail.css";
-import { DownOutlined, DollarOutlined } from "@ant-design/icons";
+import { DownOutlined, DollarOutlined, UserOutlined } from "@ant-design/icons";
 
 // Initilze that our content is equal to the layout
 const { Content } = Layout;
@@ -66,20 +65,19 @@ const columns = [
   },
 ];
 
-// For pagination to work we need to get the user input, such as page size, and current page number this is what the function does
+// This variable keeps track of dynamic URL params such as how much data the user wants to see per page or what transaction type they want to see to allow features such as filtering 
 const getURLParams = (params) => ({
+  // search represents the search of the user 
+  ticker: params.ticker,
   // Limit represents how much data per page
   limit: params.pagination.pageSize,
   // offset represents how much data is being ignored
   offset: (params.pagination.current - 1) * params.pagination.pageSize,
-  // Set the name search
-  ticker: params.ticker,
-  // Keeps track of the transaction type filtering
+  // trnasaction type represents the type of transaction the user wants to see
   transactionType: params.transactionType,
 });
-
-class CongressTrades extends React.Component {
-  // Static variables that we will fetch later on
+class senatorPersonDetail extends React.Component {
+  // variables that we will fetch later on 
   state = {
     // Variable to hold the data we retrieve from our request
     data: [],
@@ -90,12 +88,11 @@ class CongressTrades extends React.Component {
       // Current page size of the user's table
       pageSize: 20,
     },
-    // Initilzing a skeleton loader
-    tableLoading: false,
-    statsLoading: false,
     // Keeps track of the user's search
     ticker: "",
-
+    // Initilzing skeleton loaders so that when we are making requests our table and stats dont look ugly
+    tableLoading: false,
+    statsLoading: false,
     // Initilze stats
     stats: {
       // Intilize the total number of records
@@ -106,53 +103,67 @@ class CongressTrades extends React.Component {
       purchases: "loading...",
       // intilize the number of sales
       sales: "loading...",
-
+      // intilizing the image of the person
       image: "",
     },
+    // keep track of the persons details
     personDetail: {
       currentChamber: "",
       currentParty: "",
       currentState: "",
     },
-
+    // intilize the transaction type the user wants to see to be able to filter
     transactionType: "",
   };
   // This function is called when this component is first mounted to DOM(meaning when its first visually represented)
   componentDidMount() {
     // We assign the pagination variable what we initilzed earlier in the state variable
     const { pagination } = this.state;
-    // Fetch this variable
+    // validate this variable upon rendering the page to be able to create the table\
     this.fetch({ pagination });
   }
-  // Function called when any changes are done to the table
+
+  // function to basically keep track of the pagaination of the table and the interactions of the user with the table
   handleTableChange = (pagination) => {
     // Fetch the pagination variable to validate the pagination request of the user
     this.fetch({
       pagination,
-      ticker: this.state.ticker
+      ticker: this.state.ticker,
+      transactionType: this.state.transactionType,
     });
   };
 
+  // function to basically keep track of the searches of the user
   handleSearch = (ticker) => {
-    // Handles the search, takes the value of the user input
+    // Fetch the search variable to validate the search request of the user
     this.setState({ ticker });
-    // Fetch the data with the new ticker
+    // update other variables
     this.fetch({
+      // keep the pagination the same
       pagination: this.state.pagination,
+      // keep the transaction type the same
+      transactionType: this.state.transactionType,
+      // change the ticker to the user input
       ticker,
     });
   };
-
+  // function to basically keep track of the filter input from the user
   handleTransactionTypeFilter = (filterInput) => {
+    // set the transaction type variable to the filter input
     this.setState({
       transactionType: filterInput.key,
     })
+    // Update other variables
     this.fetch({
+      // keep the pagination variable the same
       pagination: this.state.pagination,
+      // keep the search variable the same
       ticker: this.state.ticker,
+      // change the transaction type to the user input
       transactionType: filterInput.key,
     });
   };
+
   // Request the info from the backend
   fetch = (params = {}) => {
     // Set the skeleton loader to true while we are making the request
@@ -163,12 +174,13 @@ class CongressTrades extends React.Component {
       type: "json",
       // Get the user params to validate the pagination for the request URL
       data: getURLParams(params),
-    }).catch(err => {
+    })
+    // if the request is not successful redirect to 404 since its prolly an invalid congress person that we are looking for
+    .catch(err => {
       window.location.href = "/404";
     })
     // Upon the requeset validiating
     .then((data) => {
-      console.clear();
       // Assign variables respectively
       this.setState({
         // Set skeleton loader to false as data is loaded
@@ -177,11 +189,13 @@ class CongressTrades extends React.Component {
         data: data.results,
         // Assign the pagination variables
         pagination: {
+          // spread the pagination variable from its previous
           ...params.pagination,
+          // and update only its total to the total number of records we have for the table
           total: data.count - params.pagination.pageSize,
         },
 
-      // once we gets stats variables, connect to the stats backend
+      // once we gets table variables, connect to the stats backend
       });
     }).then(() => {
       reqwest({
@@ -194,7 +208,7 @@ class CongressTrades extends React.Component {
           // Set skeleton loader to false as data is loaded
           statsLoading: false,
           stats: {
-            // Assign the stats variables
+            // Assign the variables respectively
             volume: response.results[0].totalVolumeTransactions.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
             total: response.results[0].totalTransactions,
             purchases: response.results[0].purchases,
@@ -213,6 +227,7 @@ class CongressTrades extends React.Component {
   };
 
   render() {
+    // pass in variables to show within our webpage
     const { data, pagination, statsLoading, tableLoading, stats, personDetail } = this.state;
     return (
       <Layout style={{ marginRight: 0, minHeight: 1100}}>
@@ -347,4 +362,4 @@ class CongressTrades extends React.Component {
   }
 }
 
-export default CongressTrades;
+export default senatorPersonDetail;

@@ -6,10 +6,10 @@
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import React from 'react';
 // Import pages
-import CongressTrades from './Components/CongressTrades/CongressTrades';
-import TickerDetail from './Components/TickerDetail/TickerDetail';
-import CongressPersonDetail from './Components/CongressPersonDetail/CongressPersonDetail';
-import CongressPeople from './Components/CongressPeople/CongressPeople';
+import senateTrades from './Components/CongressTrades/CongressTrades';
+import tickerDetail from './Components/TickerDetail/TickerDetail';
+import senatorPersonDetail from './Components/CongressPersonDetail/CongressPersonDetail';
+import senatePeople from './Components/CongressPeople/CongressPeople';
 import NotFound from './Components/NotFound/NotFound';
 // Parent CSS
 import './App.css';
@@ -22,13 +22,13 @@ function App() {
                     {/*Redirects to the default page*/}
                     <Redirect exact from="/" to="/Senate-Trades"/>
                     {/*Senate trades*/}
-                    <Route path="/Senate-Trades" component={CongressTrades}/>
+                    <Route path="/Senate-Trades" component={senateTrades}/>
                     {/*Ticker page*/}
-                    <Route path="/Ticker/:ticker" component={TickerDetail}/>
+                    <Route path="/Ticker/:ticker" component={tickerDetail}/>
                     {/*Senator Profile Page*/}
-                    <Route path="/Senator/:name" component={CongressPersonDetail}/>
+                    <Route path="/Senator/:name" component={senatorPersonDetail}/>
                     {/*Shows all the Senate People*/}
-                    <Route path="/Senate-People" component={CongressPeople}/>
+                    <Route path="/Senate-People" component={senatePeople}/>
                     {/*404*/}
                     <Route component={NotFound}/>
                 </Switch>
