@@ -6,7 +6,7 @@ Insider Unlocked is an ongoing web application we have been co-developing for th
 </div>
 <div align="center">
   <h3>
-    <a href="https://insiderunlocked.web.app/">
+    <a href="https://insiderunlocked.com/">
       Website
     </a>
     <span> | </span>

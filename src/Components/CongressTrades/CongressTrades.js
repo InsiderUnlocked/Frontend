@@ -33,7 +33,7 @@ const columns = [
     render: (text) => (
       // if ticker is a dash that means its not a stock so its not valid
       // replace each dot with a dash in text
-      text === ("-") ? "N/A" :  <a href={`https://insiderunlocked.web.app/ticker/${text.replace(/\./g,'-')}`}>{text}</a>
+      text === ("-") ? "N/A" :  <a href={`https://insiderunlocked.com/ticker/${text.replace(/\./g,'-')}`}>{text}</a>
     ),
   },
   {
@@ -61,7 +61,7 @@ const columns = [
     dataIndex: "name",
     key: "name",
     render: (text, row) => (
-      <a href={`https://insiderunlocked.web.app/Senator/${row.bioguide}`}>{text}</a>
+      <a href={`https://insiderunlocked.com/Senator/${row.bioguide}`}>{text}</a>
     ),
   },
   {

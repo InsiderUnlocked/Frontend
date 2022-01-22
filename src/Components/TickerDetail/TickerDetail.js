@@ -58,7 +58,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (text, row) => (
-      <a href={`https://insiderunlocked.web.app/Senator/${row.bioguide}`}>{text}</a>
+      <a href={`https://insiderunlocked.com/Senator/${row.bioguide}`}>{text}</a>
     ),
   },
   {

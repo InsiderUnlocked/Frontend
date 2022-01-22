@@ -26,7 +26,7 @@ const columns = [
     dataIndex: "ticker",
     key: "ticker",
     render: (text) => (
-      text === ("-") ? "Other Assets" : <a href={`https://insiderunlocked.web.app/ticker/${text}`}>{text}</a>
+      text === ("-") ? "Other Assets" : <a href={`https://insiderunlocked.com/ticker/${text}`}>{text}</a>
     ),
   },
   {
