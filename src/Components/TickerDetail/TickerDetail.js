@@ -57,7 +57,9 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
-    render: text => <a style={{ textDecoration: "none" }} href={`https://insiderunlocked.web.app/Senator/${text}`}>{text}</a>
+    render: (text, row) => (
+      <a href={`https://insiderunlocked.web.app/Senator/${row.bioguide}`}>{text}</a>
+    ),
   },
   {
     title: 'Source',

@@ -57,10 +57,11 @@ const columns = [
   },
   {
     title: "Name",
+    // take two data indexes
     dataIndex: "name",
     key: "name",
-    render: (text) => (
-      <a href={`https://insiderunlocked.web.app/Senator/${text.replace(/\./g, " ")}`}>{text}</a>
+    render: (text, row) => (
+      <a href={`https://insiderunlocked.web.app/Senator/${row.bioguide}`}>{text}</a>
     ),
   },
   {
