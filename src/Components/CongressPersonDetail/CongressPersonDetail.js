@@ -172,70 +172,70 @@ class senatorPersonDetail extends React.Component {
     this.setState({ statsLoading: true, tableLoading: true });
     reqwest({
       // get the bioguide for congress poeple not name
-      
+
       url: `https://insiderunlocked.herokuapp.com/government/congress-person/${this.props.match.params.name}/?format=json`,
       method: "get",
       type: "json",
       // Get the user params to validate the pagination for the request URL
       data: getURLParams(params),
     })
-    // if the request is not successful redirect to 404 since its prolly an invalid congress person that we are looking for
-    .catch(err => {
-      window.location.href = "/404";
-    })
-    // Upon the requeset validiating
-    .then((data) => {
-      // Assign variables respectively
-      this.setState({
-        // Set skeleton loader to false as data is loaded
-        tableLoading: false,
-        // Assign the data
-        data: data.results,
-        // Assign the pagination variables
-        pagination: {
-          // spread the pagination variable from its previous
-          ...params.pagination,
-          // and update only its total to the total number of records we have for the table
-          total: data.count - params.pagination.pageSize,
-        },
-
-      // once we gets table variables, connect to the stats backend
-      });
-    }).then(() => {
-      reqwest({
-        url: `https://insiderunlocked.herokuapp.com/government/congress-stats/${this.props.match.params.name}/?format=json`,
-        method: "get",
-        type: "json",
-        // Upon the requeset validiating
-      }).then((response) => {
+      // if the request is not successful redirect to 404 since its prolly an invalid congress person that we are looking for
+      // Upon the requeset validiating
+      .then((data) => {
+        // Assign variables respectively
         this.setState({
           // Set skeleton loader to false as data is loaded
-          statsLoading: false,
-          stats: {
-            // Assign the variables respectively
-            volume: response.results[0].totalVolumeTransactions.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-            total: response.results[0].totalTransactions,
-            purchases: response.results[0].purchases,
-            sales: response.results[0].sales,
-            image: response.results[0].image,
+          tableLoading: false,
+          // Assign the data
+          data: data.results,
+          // Assign the pagination variables
+          pagination: {
+            // spread the pagination variable from its previous
+            ...params.pagination,
+            // and update only its total to the total number of records we have for the table
+            total: data.count - params.pagination.pageSize,
           },
-          personDetail: {
-            currentChamber: response.results[0].currentChamber,
-            currentParty: response.results[0].currentParty,
-            currentState: response.results[0].currentState,
-            fullName: response.results[0].fullName,
-          },
+
+          // once we gets table variables, connect to the stats backend
         });
-      })
-      
-    });
+      }).then(() => {
+        reqwest({
+          url: `https://insiderunlocked.herokuapp.com/government/congress-stats/${this.props.match.params.name}/?format=json`,
+          method: "get",
+          type: "json",
+          // Upon the requeset validiating
+        }).then((response) => {
+          this.setState({
+            // Set skeleton loader to false as data is loaded
+            statsLoading: false,
+            stats: {
+              // Assign the variables respectively
+              volume: response.results[0].totalVolumeTransactions.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+              total: response.results[0].totalTransactions,
+              purchases: response.results[0].purchases,
+              sales: response.results[0].sales,
+              image: response.results[0].image,
+            },
+            personDetail: {
+              currentChamber: response.results[0].currentChamber,
+              currentParty: response.results[0].currentParty,
+              currentState: response.results[0].currentState,
+              fullName: response.results[0].fullName,
+            },
+          });
+        })
+          .catch(err => {
+            window.location.href = "/404";
+          })
+
+      });
   };
 
   render() {
     // pass in variables to show within our webpage
     const { data, pagination, statsLoading, tableLoading, stats, personDetail } = this.state;
     return (
-      <Layout style={{ marginRight: 0, minHeight: 1100}}>
+      <Layout style={{ marginRight: 0, minHeight: 1100 }}>
         {/* Rendering our navbar*/}
         <Navbar />
         {/* Initilzing our content */}
@@ -251,8 +251,8 @@ class senatorPersonDetail extends React.Component {
           >
             <Card
               hoverable
-              title={personDetail.fullName + ": " + personDetail.currentParty+ ', ' + personDetail.currentChamber + ', ' + personDetail.currentState}
-              className = "smooth-card"
+              title={personDetail.fullName + ": " + personDetail.currentParty + ', ' + personDetail.currentChamber + ', ' + personDetail.currentState}
+              className="smooth-card"
               loading={statsLoading}
             >
               <Avatar size={125} icon={<UserOutlined />} src={stats.image} />
@@ -266,7 +266,7 @@ class senatorPersonDetail extends React.Component {
                 <Card
                   hoverable
                   title="Number of Transactions"
-                  className = "smooth-card"
+                  className="smooth-card"
                   loading={statsLoading}
                 >
                   <h1 style={{ fontSize: "30px" }}>{stats.total}</h1>
@@ -280,7 +280,7 @@ class senatorPersonDetail extends React.Component {
                 <Card
                   hoverable
                   title="Total Trade Volume"
-                  className = "smooth-card"
+                  className="smooth-card"
                   loading={statsLoading}
                 >
                   <h1 style={{ fontSize: "30px" }}>${stats.volume}</h1>
@@ -294,7 +294,7 @@ class senatorPersonDetail extends React.Component {
                 <Card
                   hoverable
                   title="Trade Type Ratio"
-                  className = "smooth-card"
+                  className="smooth-card"
                   loading={statsLoading}
                 >
                   <h1 style={{ fontSize: "30px" }}>
@@ -317,27 +317,27 @@ class senatorPersonDetail extends React.Component {
             }}
           >
             <TitleSearch
-              
+
               onSearch={this.handleSearch}
               style={{ marginRight: 20 }}
             />
-              <Dropdown overlay={    
-                <Menu onClick={this.handleTransactionTypeFilter}>
-                  <Menu.Item key="Purchase" icon={<DollarOutlined />}>
-                    Purchases
-                  </Menu.Item>
-                  <Menu.Item key="Sale (Full)" icon={<DollarOutlined />}>
-                    Full Sales
-                  </Menu.Item>
-                  <Menu.Item key="Sale (Partial)" icon={<DollarOutlined />}>
-                    Partial Sales
-                  </Menu.Item>
-                  <Menu.Item key="Sale" icon={<DollarOutlined />}>
-                    All Sales
-                  </Menu.Item>
-                </Menu>
-              }>
-              <div style={{marginLeft: 20 ,marginRight: 20 }} >
+            <Dropdown overlay={
+              <Menu onClick={this.handleTransactionTypeFilter}>
+                <Menu.Item key="" icon={<DollarOutlined />}>
+                  All Transactions
+                </Menu.Item>
+                <Menu.Item key="Purchase" icon={<DollarOutlined />}>
+                  Purchases
+                </Menu.Item>
+                <Menu.Item key="Sale (Full)" icon={<DollarOutlined />}>
+                  Full Sales
+                </Menu.Item>
+                <Menu.Item key="Sale (Partial)" icon={<DollarOutlined />}>
+                  Partial Sales
+                </Menu.Item>
+              </Menu>
+            }>
+              <div style={{ marginLeft: 20, marginRight: 20 }} >
                 <Button>
                   Filter Transaction Type <DownOutlined />
                 </Button>
