@@ -22,6 +22,11 @@ const columns = [
     key: "transactionDate",
   },
   {
+    title: 'Asset Type',
+    dataIndex: 'assetType',
+    key: 'assetType',
+  },
+  {
     title: "Ticker",
     dataIndex: "ticker",
     key: "ticker",
