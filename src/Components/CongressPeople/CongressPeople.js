@@ -27,7 +27,9 @@ class senatePeople extends React.Component {
   // Static variables that we will fetch later on
   state = {
     // Variable to hold the data we retrieve from our request
-    data: [],
+    data: [
+      // to make requests based of name
+    ],
     // variable to hold the search input of the user
     name: "",
     // Initilzing a skeleton loader for the cards
@@ -104,7 +106,7 @@ class senatePeople extends React.Component {
             {data.map((item) => (
               <Col xs={24} xl={6} key={item.id}>
                 {/* add link to card */}
-                <a href={`https://insiderunlocked.com/Senator/${item.bioguide}`}>
+                <a href={`https://insiderunlocked.com/Senator/${item.fullName}`}>
                 <Card
                   hoverable
                   className='smooth-card'
