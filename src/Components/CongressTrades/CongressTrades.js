@@ -4,12 +4,15 @@
 
 // Imports
 import React from "react";
-import { Table, Tag, Card, Col, Row, Dropdown, Button, Layout, Menu } from "antd";
+
+import { TitleSearch } from "../../Utils/Search/TitleSearch";
 import FooterComponent from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
-import reqwest from "reqwest";
-import { TitleSearch } from "../../Utils/Search/TitleSearch";
+
 import { DownOutlined, SlidersOutlined, DollarOutlined } from "@ant-design/icons";
+import { Table, Tag, Card, Col, Row, Dropdown, Button, Layout, Menu } from "antd";
+
+import reqwest from "reqwest";
 import { Adsense } from '@ctrl/react-adsense';
 
 // Initilze that our content is equal to the layout
@@ -123,13 +126,15 @@ class senateTrades extends React.Component {
   componentDidMount() {
     // We assign the pagination variable what we initilzed earlier in the state variable
     const { pagination } = this.state;
-    // validate this variable upon rendering the page to be able to create the table\
+    // validate this variable upon rendering the page to be able to create the table
     this.fetch({ pagination });
   }
   // function to basically keep track of the pagaination of the table and the interactions of the user with the table
   handleTableChange = (pagination) => {
     // Fetch the pagination variable to validate the pagination request of the user
     this.fetch({
+      // After request keep all paramaters the same except for pagination upon table change
+
       // Update pagination
       pagination,
       // keep the search variable the same
@@ -159,9 +164,9 @@ class senateTrades extends React.Component {
     });
   };
 
-  // function to basically keep track of the filter input from the user
+  // function to basically keep track of the dropdown input from the user
   handleTransactionTypeFilter = (filterInput) => {
-     // set the transaction type variable to the filter input
+     // set the transaction type variable to the dropdown input
     this.setState({
       transactionType: filterInput.key,
     })
@@ -208,7 +213,7 @@ class senateTrades extends React.Component {
       type: "json",
       // Get the user params to validate the pagination for the request URL
       data: getURLParams(params),
-      // Upon the requeset validiating
+      // Upon the request validiating
     }).then((data) => {
       // Assign variables respectively
       this.setState({
@@ -225,6 +230,7 @@ class senateTrades extends React.Component {
       });
     }).then(() => {
       reqwest({
+        // Request the stats from the backend using the current summary date range selected
         url: `https://insiderunlocked.herokuapp.com/government/summary-stats/${this.state.summary}/?format=json`,
         method: "get",
         type: "json",
@@ -329,6 +335,7 @@ class senateTrades extends React.Component {
               onSearch={this.handleSearch}
               style={{ marginRight: 20 }}
             />
+            {/* transaction type dropdown filter */}
             <Dropdown overlay={
               <Menu onClick={this.handleTransactionTypeFilter}>
                 <Menu.Item key="" icon={<DollarOutlined />}>

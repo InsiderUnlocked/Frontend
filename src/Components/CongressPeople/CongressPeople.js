@@ -5,11 +5,13 @@
 
 // Imports
 import React from 'react';
-import { Layout, Row, Col, Card, Avatar} from 'antd';
+
+import { TitleSearch } from "../../Utils/Search/TitleSearch";
 import FooterComponent from '../Footer/Footer';
 import Navbar from '../Navbar/Navbar'
+
+import { Layout, Row, Col, Card, Avatar} from 'antd';
 import reqwest from 'reqwest';
-import { TitleSearch } from "../../Utils/Search/TitleSearch";
 
 // Initilze that our content is equal to the layout
 const { Content } = Layout;
@@ -24,12 +26,10 @@ const getURLParams = (params) => ({
 });
 
 class senatePeople extends React.Component {
-  // Static variables that we will fetch later on
+  // Variables that we will fetch later on
   state = {
     // Variable to hold the data we retrieve from our request
-    data: [
-      // to make requests based of name
-    ],
+    data: [],
     // variable to hold the search input of the user
     name: "",
     // Initilzing a skeleton loader for the cards
@@ -94,8 +94,9 @@ class senatePeople extends React.Component {
               marginBottom: "10px",
             }}>
             <h1 style={{marginLeft: 25, marginTop: 5}}className="headerSummaryText">All of senate</h1>
+            
             <TitleSearch
-              
+              // component for searching functionality - calls on handleSearch function upon user typing in input field
               onSearch={this.handleSearch}
               style={{ marginRight: 25 }}
             />
@@ -117,7 +118,6 @@ class senatePeople extends React.Component {
                   title={item.fullName}
                   description={item.currentParty+ ', ' + item.currentChamber + ', ' + item.currentState}
                 />
-
                 </Card>
                 </a>
               </Col>

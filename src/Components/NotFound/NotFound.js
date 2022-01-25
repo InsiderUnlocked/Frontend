@@ -4,13 +4,12 @@
 
 // Import Libraries
 import React from 'react';
-import { Layout, Button, Result } from 'antd';
+import { Link } from 'react-router-dom'
+
 import Navbar from '../Navbar/Navbar'
 import FooterComponent from '../Footer/Footer';
-import { Link } from 'react-router-dom'
-const { Content } = Layout;
 
-
+import { Layout, Button, Result, Content } from 'antd';
 
 const NotFound = () => {  
   return (

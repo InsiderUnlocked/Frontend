@@ -4,12 +4,15 @@
 
 // Imports
 import React from "react";
-import { Layout, Col, Row, Button, Menu, Dropdown, Card, Table, Tag, Avatar } from "antd";
+
+import { TitleSearch } from "../../Utils/Search/TitleSearch";
 import FooterComponent from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
-import { TitleSearch } from "../../Utils/Search/TitleSearch";
-import reqwest from "reqwest";
+
+import { Layout, Col, Row, Button, Menu, Dropdown, Card, Table, Tag, Avatar } from "antd";
 import { DownOutlined, DollarOutlined, UserOutlined } from "@ant-design/icons";
+
+import reqwest from "reqwest";
 
 // Initilze that our content is equal to the layout
 const { Content } = Layout;
@@ -17,8 +20,11 @@ const { Content } = Layout;
 // Initilze our columns
 const columns = [
   {
+    // Title of column
     title: "Transaction Date",
+    // The index of the data
     dataIndex: "transactionDate",
+    // the unique key assigned to this column - React renders using the key prop
     key: "transactionDate",
   },
   {
@@ -30,6 +36,7 @@ const columns = [
     title: "Ticker",
     dataIndex: "ticker",
     key: "ticker",
+    // 
     render: (text) => (
       text === ("-") ? "Other Assets" : <a href={`https://insiderunlocked.com/ticker/${text}`}>{text}</a>
     ),
@@ -45,13 +52,15 @@ const columns = [
     dataIndex: "transactionType",
     render: (type) => (
       <Tag
-        // if type has sale in it then color it red
+        // if type has sale in it then color it red, else color it green
         color={type.includes("Sale") ? "volcano" : "green"}
+        
+        // if type has full, then its a full sale, if type has partial its a partial sale, else its a purchase
         key={type.includes("Full") ? "Sale" : type.includes("Partial") ? "Partial Sale" : "Purchase"}
       >
         {type.includes("Full") ? "Sale" : type.includes("Partial") ? "Partial Sale" : "Purchase"}
       </Tag>
-    ),
+      ),
   },
   {
     title: "Name",
@@ -72,11 +81,11 @@ const columns = [
 
 // This variable keeps track of dynamic URL params such as how much data the user wants to see per page or what transaction type they want to see to allow features such as filtering 
 const getURLParams = (params) => ({
-  // search represents the search of the user 
+  // ticker represents the ticker in url 
   ticker: params.ticker,
   // Limit represents how much data per page
   limit: params.pagination.pageSize,
-  // offset represents how much data is being ignored
+  // offset represents the starting index of data
   offset: (params.pagination.current - 1) * params.pagination.pageSize,
   // trnasaction type represents the type of transaction the user wants to see
   transactionType: params.transactionType,
@@ -108,13 +117,16 @@ class senatorPersonDetail extends React.Component {
       purchases: "loading...",
       // intilize the number of sales
       sales: "loading...",
-      // intilizing the image of the person
+      // intilizing the image of the congress person
       image: "",
     },
     // keep track of the persons details
     personDetail: {
+      // variable to keep senators current chamber
       currentChamber: "",
+      // variable to keep senators current party
       currentParty: "",
+      // variable to keep senators curreny state 
       currentState: "",
       // variable to keep senators full name
       fullName: "",
@@ -176,7 +188,7 @@ class senatorPersonDetail extends React.Component {
     // Set the skeleton loader to true while we are making the request
     this.setState({ statsLoading: true, tableLoading: true });
     reqwest({
-      // get the bioguide for congress poeple not name
+      // get the fullName for congress poeple not name
 
       url: `https://insiderunlocked.herokuapp.com/government/congress-person/${this.props.match.params.name}/?format=json`,
       method: "get",
@@ -215,6 +227,7 @@ class senatorPersonDetail extends React.Component {
             statsLoading: false,
             stats: {
               // Assign the variables respectively
+              // for totalVolumeTransactions we are converting it to dollar format
               volume: response.results[0].totalVolumeTransactions.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
               total: response.results[0].totalTransactions,
               purchases: response.results[0].purchases,
@@ -229,6 +242,7 @@ class senatorPersonDetail extends React.Component {
             },
           });
         })
+        // 404 page if request fails 
           .catch(err => {
             window.location.href = "/404";
           })

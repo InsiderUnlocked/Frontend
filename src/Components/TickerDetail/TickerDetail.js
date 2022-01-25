@@ -3,20 +3,19 @@
 
 // IMPORTS
 import React from 'react';
-import { Table, Tag } from 'antd';
+
+import { TitleSearch } from "../../Utils/Search/TitleSearch";
 import FooterComponent from '../Footer/Footer';
 import Navbar from '../Navbar/Navbar'
+
+import { Row, Col, Card, Dropdown, Menu, Button, Table, Tag, Layout, Content } from 'antd';
+import { DownOutlined, DollarOutlined } from "@ant-design/icons";
+
 import TradingViewWidget from 'react-tradingview-widget';
 import { Themes } from 'react-tradingview-widget';
 
 import reqwest from 'reqwest';
-import { Row, Col, Card, Dropdown, Menu, Button } from 'antd';
-import { Layout } from "antd";
-import { TitleSearch } from "../../Utils/Search/TitleSearch";
-import { DownOutlined, DollarOutlined } from "@ant-design/icons";
 
-// Initilze that our content is equal to the layout
-const { Content } = Layout;
 // Initilizing the columns of our table
 const columns = [
   {
@@ -47,6 +46,8 @@ const columns = [
       <Tag
         // if type has sale in it then color it red
         color={type.includes("Sale") ? "volcano" : "green"}
+
+        // if type has full, then its a full sale, if type has partial its a partial sale, else its a purchase
         key={type.includes("Full") ? "Sale" : type.includes("Partial") ? "Partial Sale" : "Purchase"}
       >
         {type.includes("Full") ? "Sale" : type.includes("Partial") ? "Partial Sale" : "Purchase"}
@@ -58,6 +59,7 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     render: (text) => (
+      // set up urls to lead to other pages
       <a href={`https://insiderunlocked.com/Senator/${text}`}>{text}</a>
     ),
   },
@@ -77,7 +79,7 @@ const getURLParams = params => ({
   name: params.name,
   // Limit represents how much data per page
   limit: params.pagination.pageSize,
-  // offset represents how much data is being ignored
+  // offset represents the starting index of data
   offset: (params.pagination.current - 1) * params.pagination.pageSize,
 });
 
