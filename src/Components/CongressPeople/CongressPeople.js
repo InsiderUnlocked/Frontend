@@ -58,7 +58,7 @@ class senatePeople extends React.Component {
     // Set the skeleton loader to true while we are making the request
     this.setState({ loading: true });
     reqwest({
-      url: 'https://insiderunlocked.herokuapp.com/government/congress-all/?format=json',
+      url: 'https://insiderunlocked.herokuapp.com/government/congress-all/?format=json&search=&offset=0&limit=100',
       method: 'get',
       type: 'json',
       // Get the user params to validate the request URL
